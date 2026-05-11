@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NL to Regex - Ollama</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            color: #444;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .model-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .model-btn {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .model-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .model-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+        
+        .btn-copy {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-copy:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn-copy:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .output-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .output-label {
+            color: #444;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .output-box {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            word-break: break-all;
+            min-height: 50px;
+            color: #333;
+        }
+        
+        .output-box.empty {
+            color: #999;
+            font-style: italic;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+            margin-top: 15px;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f0f0f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .success {
+            background: #efe;
+            border: 1px solid #cfc;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Natural Language to Regex</h1>
+        <p class="subtitle">Convert descriptions to custom regex patterns using Ollama</p>
+        
+        <form id="regexForm">
+            <div class="form-group">
+                <label for="model">Select Model:</label>
+                <div class="model-selector" id="modelSelector">
+                    <!-- Models will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="nlInput">Natural Language Description:</label>
+                <textarea 
+                    id="nlInput" 
+                    placeholder="e.g., 'lines containing the string dog or truck at least 5 times'"
+                    required
+                ></textarea>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="btn-generate">Generate Regex</button>
+                <button type="button" class="btn-copy" id="copyBtn" disabled>Copy to Clipboard</button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <span class="spinner"></span>
+                <span>Generating regex...</span>
+            </div>
+            
+            <div id="messageBox"></div>
+            
+            <div class="output-section">
+                <div class="output-label">Generated Regex:</div>
+                <div class="output-box empty" id="outputBox">No regex generated yet</div>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        const models = {{ models | tojson }};
+        let selectedModel = models[0];
+        let lastRegex = '';
+        
+        // Initialize model selector
+        function initModelSelector() {
+            const modelSelector = document.getElementById('modelSelector');
+            models.forEach(model => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `model-btn ${model === selectedModel ? 'active' : ''}`;
+                btn.textContent = model;
+                btn.onclick = () => selectModel(model, btn);
+                modelSelector.appendChild(btn);
+            });
+        }
+        
+        function selectModel(model, btn) {
+            selectedModel = model;
+            document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        
+        // Handle form submission
+        document.getElementById('regexForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nlInput = document.getElementById('nlInput').value.trim();
+            if (!nlInput) {
+                showMessage('Please enter a natural language description', 'error');
+                return;
+            }
+            
+            const loading = document.getElementById('loading');
+            const messageBox = document.getElementById('messageBox');
+            const outputBox = document.getElementById('outputBox');
+            
+            loading.classList.add('show');
+            messageBox.innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nl: nlInput, model: selectedModel })
+                });
+                
+                const data = await response.json();
+                loading.classList.remove('show');
+                
+                if (!response.ok) {
+                    showMessage(data.error || 'Error generating regex', 'error');
+                    outputBox.className = 'output-box empty';
+                    outputBox.textContent = 'Error occurred';
+                    return;
+                }
+                
+                lastRegex = data.regex;
+                outputBox.className = 'output-box';
+                outputBox.textContent = lastRegex;
+                
+                document.getElementById('copyBtn').disabled = false;
+                showMessage(`Regex generated using ${data.model}`, 'success');
+            } catch (error) {
+                loading.classList.remove('show');
+                showMessage(`Network error: ${error.message}`, 'error');
+                outputBox.className = 'output-box empty';
+                outputBox.textContent = 'Error occurred';
+            }
+        });
+        
+        // Handle copy button
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            if (lastRegex) {
+                navigator.clipboard.writeText(lastRegex).then(() => {
+                    showMessage('Copied to clipboard!', 'success');
+                }).catch(() => {
+                    showMessage('Failed to copy', 'error');
+                });
+            }
+        });
+        
+        function showMessage(msg, type) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.className = type;
+            messageBox.textContent = msg;
+            setTimeout(() => {
+                messageBox.textContent = '';
+                messageBox.className = '';
+            }, 4000);
+        }
+        
+        // Initialize on load
+        initModelSelector();
+    </script>
+</body>
+</html>
