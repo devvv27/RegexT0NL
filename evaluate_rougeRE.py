@@ -7,9 +7,9 @@ from collections import Counter
 from typing import List, Tuple
 
 OLLAMA_HOST = "http://localhost:11434"
-DEFAULT_MODEL = "llama3.2"
-TEST_NL_PATH = "datasets/sample_100/src-100.txt"
-TEST_TARGET_PATH = "datasets/sample_100/targ-100.txt"
+DEFAULT_MODEL = "llama3"
+TEST_NL_PATH = "datasets/trying/src-trying.txt"
+TEST_TARGET_PATH = "datasets/trying/targ-trying.txt"
 
 
 def build_prompt(nl_text: str) -> str:
@@ -44,7 +44,7 @@ def build_prompt(nl_text: str) -> str:
 
 
 def fix_regex(regex_text: str) -> str:
-    regex_text = re.sub(r'\(\?[<>=!][^)]*\)', '', regex_text)
+    regex_text = re.sub(r'\(\?<[>=!][^)]*\)', '', regex_text)
     regex_text = regex_text.replace('anychar', '.')
     regex_text = regex_text.replace('any-char', '.')
     regex_text = regex_text.replace('uppercase', '[A-Z]')
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     import sys
 
     model = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_MODEL
-    max_samples = int(sys.argv[2]) if len(sys.argv) > 2 else 100
+    max_samples = int(sys.argv[2]) if len(sys.argv) > 2 else 100  # Changed from 100 to 300
     use_random = sys.argv[3].lower() != "sequential" if len(sys.argv) > 3 else True
     results = evaluate(model, max_samples, use_random)
     print_results(results)

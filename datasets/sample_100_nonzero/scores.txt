@@ -1,0 +1,100 @@
+109	0.789025	0.838710	0.689655	0.838710	lines with the string 'dog' or not a capital letter, zero or more times in them	((dog)|(~([A-Z])))*
+220	0.745921	0.923077	0.545455	0.769231	lines containing zero or more vowels	([AEIOUaeiou])*
+139	0.738095	0.750000	0.714286	0.750000	lines without the string 'dog' or a letter	~((dog)|([A-Za-z]))
+281	0.694932	0.736842	0.611111	0.736842	lines containing a lower-case letter, the string 'dog', the string 'truck', and the string 'ring'	([a-z]).*((dog)&(truck)&(ring)).*
+163	0.690476	0.750000	0.571429	0.750000	Lines with a letter, zero or more times.	(([A-Za-z])|([a-z]))*
+158	0.687307	0.736842	0.588235	0.736842	lines containing the string 'dog' or a letter	\b(dog)|([A-Za-z])\b
+43	0.679365	0.733333	0.571429	0.733333	lines containing either a vowel, string 'dog', or string 'truck', zero or more times	(.*([AEIOUaeiou])|(dog)|(truck).*)*
+154	0.676963	0.756757	0.571429	0.702703	lines with words having the string 'dog', the string 'truck', and the string 'ring', 3 times  or more	(\b(dog)&(truck)&(ring)\b){3,}
+60	0.655556	0.733333	0.500000	0.733333	lines which aare not having a character or the string 'dog' and a vowel	(~(.))|((dog)&([AEIOUaeiou]))
+280	0.651852	0.700000	0.555556	0.700000	lines without the string 'dog' and a character	.*(~(dog))&(.).*
+86	0.651515	0.727273	0.500000	0.727273	Lines that don't contain the string 'dog', a character, or a number	~((dog)&(.)&([0-9]))
+239	0.645586	0.695652	0.545455	0.695652	lines with the string 'dog' at least once and the string 'truck', a lower-case letter, and the string 'ring' in them	((dog)+)&((truck)&([a-z])&(ring))
+82	0.626263	0.666667	0.545455	0.666667	lines which are not containing the string 'dog' or the string 'truck'	~(.*(dog)|(truck).*)
+74	0.611111	0.666667	0.500000	0.666667	lines without the string 'dog' or a vowel or number	~((dog)&([AEIOUaeiou])&([0-9]))
+253	0.601307	0.722222	0.470588	0.611111	lines containing either the string 'dog', a number, or a lower-case letter preceding the string 'truck'	((dog)|([0-9])|([a-z])).*(truck).*
+13	0.600580	0.640000	0.521739	0.640000	lines without the string 'dog' before a character once or more times.	~((dog.*..*)+)
+291	0.590909	0.636364	0.500000	0.636364	lines not a letter or the string 'dog' at least twice	~(((dog){2,})&([A-Za-z]))
+9	0.584813	0.756757	0.457143	0.540541	lines with zero or more of the string 'dog' or a capital letter before a character	((dog)*)|(([A-Z]).*(.).*)
+7	0.584795	0.666667	0.421053	0.666667	lines containing a capital letter followed by a vowel	[A-Z].*[AEIOUaeiou].*
+103	0.580664	0.628571	0.484848	0.628571	lines which are having the string 'dog', the string 'truck', and a vowel before the string 'ring'	((dog)&(truck)&([AEIOUaeiou])).*(ring).*
+234	0.577915	0.631579	0.470588	0.631579	Lines ending with a number, zero or more.	((.*)([0-9]))*
+185	0.574780	0.666667	0.451613	0.606061	lines with words with the string 'dog' at least 5 times a long with a letter	\b((dog){5,})&([A-Za-z])\b
+24	0.572222	0.687500	0.466667	0.562500	lines containing a character, followed by the string 'dog' or the string 'truck'	(((.).*(dog).*)|(truck))(.*)
+283	0.571594	0.720000	0.434783	0.560000	lines where 5 or more times the string 'dog' or a vowel occurs	((dog)|([AEIOUaeiou])){5,}
+125	0.568182	0.666667	0.454545	0.583333	lines containing a letter or a character before the string 'dog'	([A-Za-z]).*((dog)|(.)).*
+290	0.568039	0.645161	0.413793	0.645161	lines with words with the string 'dog' and a vowel, zero or more times in it	(\b(dog)&([AEIOUaeiou])\b)*
+81	0.564736	0.702703	0.342857	0.648649	lines that contain a vowel followed by the strings 'dog' or 'truck', zero times or more	(([AEIOUaeiou]).*(dog).*)|((truck)*)
+191	0.556777	0.642857	0.384615	0.642857	lines with a letter followed by 'dog' or a character	([A-Za-z]).*(.*(dog)|(.).*).*
+100	0.554401	0.615385	0.432432	0.615385	lines containing the string 'dog' before a number, the string 'truck', and a letter	(dog).*(([0-9])&(truck)&([A-Za-z])).*
+182	0.549145	0.615385	0.416667	0.615385	lines that don't contain a number and the string 'dog'	\b(~([0-9]))&(dog)\b
+272	0.548148	0.600000	0.444444	0.600000	lines starting with a letter at least 3 times	(([A-Za-z]){3,})(.*)
+112	0.530303	0.545455	0.500000	0.545455	lines without the string 'dog' or a character	~((dog)|(.*..*))
+11	0.530021	0.695652	0.285714	0.608696	lines that have a number and letter followed by a vowel	(([0-9])&([A-Za-z])).*([AEIOUaeiou]).*
+276	0.528395	0.592593	0.400000	0.592593	lines without the string 'dog' before 'truck' or capital letter	~((dog.*truck.*)|([A-Z]))
+130	0.524242	0.636364	0.300000	0.636364	lines with a vowel before string 'dog' or character	([AEIOUaeiou]).*((dog)|(.)).*
+296	0.524242	0.727273	0.300000	0.545455	lines containing 'dog' or any character, at least six instances	((.)|(dog)){6,}
+65	0.521212	0.727273	0.200000	0.636364	Lines containing a letter or character preceding a lowercase letter.	(([A-Za-z])|(.)).*([a-z]).*
+102	0.515964	0.689655	0.444444	0.413793	lines that contain a character followed by a capital letter, at least 3 times	((.){3,}).*([A-Z]).*
+31	0.511567	0.666667	0.322581	0.545455	lines with words that contain the string 'dog' or a vowel and a lower-case letter	\b(([AEIOUaeiou])&([a-z]))|(dog)\b
+73	0.511111	0.600000	0.333333	0.600000	lines without string 'dog', capital letter, or lower-case letter	~((dog)&([A-Z])&([a-z]))
+15	0.510101	0.583333	0.363636	0.583333	lines with zero or more of the string 'dog' and the string 'truck'	.*((dog)*)&(truck).*
+142	0.508333	0.562500	0.400000	0.562500	lines with a capital letter or a number preceding a character	.*(([A-Z])|([0-9])).*(.).*.*
+248	0.508333	0.562500	0.400000	0.562500	lines which are having either a character, the string 'dog', or a number before a capital letter	((.)|(dog)|([0-9])).*([A-Z]).*
+89	0.503612	0.631579	0.352941	0.526316	lines containing at least 7 vowels or characters	(([AEIOUaeiou])|(.)){7,}
+107	0.499484	0.631579	0.235294	0.631579	Lines that contain a vowel, character, or capital letter	.*([AEIOUaeiou])|(.)|([A-Z]).*
+93	0.496825	0.666667	0.357143	0.466667	lines with zero or more of the string 'dog' or ending in string 'truck'	((dog)*)|((.*)(truck))
+91	0.486216	0.571429	0.315789	0.571429	lines not ending in the string 'dog' or 'truck'	~((.*)((dog)|(truck)))
+55	0.481962	0.571429	0.303030	0.571429	Lines containing the string 'dog' 6 or more times before 'truck' and 'ring'	((dog){6,}).*((truck)&(ring)).*
+57	0.481046	0.588235	0.266667	0.588235	lines with a vowel 4 times	(([A-Za-z])|([AEIOUaeiou])){4,}
+300	0.474857	0.549020	0.326531	0.549020	lines with the string 'dog' followed by a letter, a lower-case letter, or the string 'truck'	(dog).*(([A-Za-z])|([a-z])|(truck)).*
+99	0.474810	0.521739	0.380952	0.521739	lines which are not ending with a letter, zero or more times	~(((.*)([A-Za-z]))*)
+3	0.473016	0.600000	0.285714	0.533333	lines containing a letter which then have the 'dog' string prior to a vowel	([A-Za-z].*dog.*).*([AEIOUaeiou]).*
+180	0.472050	0.608696	0.285714	0.521739	lines with 3 or more of a capital letter or number	(([A-Z])|([0-9])){3,}
+284	0.471163	0.606061	0.322581	0.484848	lines with the string 'truck' after the string 'dog' at least 3 times	\b(dog).*((truck){3,}).*\b
+207	0.460290	0.560000	0.260870	0.560000	lines with words with either a vowel, string 'dog', or character	\b([AEIOUaeiou])|(dog)|(.)\b
+233	0.460290	0.560000	0.260870	0.560000	Lines that have the string 'dog' or 'truck' seven or more times.	((dog)|(truck)){7,}
+96	0.459707	0.571429	0.307692	0.500000	lines with a vowel capital letter followed by a number	([A-Z].*[0-9].*).*([AEIOUaeiou]).*
+37	0.459029	0.516129	0.344828	0.516129	lines with the string 'dog', any amount of times with the string 'truck' or a capital	((dog)*)&((truck)|([A-Z]))
+169	0.459029	0.516129	0.344828	0.516129	lines without the string 'dog' before 'truck' without string 'ring'	~(((dog).*(truck).*)&(ring))
+190	0.457875	0.571429	0.230769	0.571429	lines which are containing a lower-case letter or the string 'dog'	.*([a-z])|(dog).*
+287	0.457875	0.571429	0.230769	0.571429	lines with the string 'dog' or a capital letter, 2 or more times in them	((dog)|([A-Z])){2,}
+145	0.454545	0.500000	0.363636	0.500000	lines containing a character after a capital letter at least 5 times	(([A-Z]){5,}).*(.).*
+298	0.451128	0.571429	0.210526	0.571429	lines that begin with a letter, at least seven times	(([A-Za-z])(.*)){7,}
+27	0.450912	0.564103	0.378378	0.410256	lines having the string 'truck' after a letter, the string 'dog', or a capital letter	(([A-Za-z])|(dog)|([A-Z])).*(truck).*
+77	0.450794	0.666667	0.285714	0.400000	lines that have words containing either the string 'dog', a capital letter, or a vowel	\b([AEIOUaeiou])|([A-Z])|(dog)\b
+34	0.449658	0.545455	0.258065	0.545455	lines with words that don't have a lower-case letter followed by string 'dog'	\b~([a-z].*dog.*)\b
+76	0.443867	0.514286	0.303030	0.514286	lines having a capital letter followed by the string 'dog' before a vowel	([A-Z]).*(dog.*[AEIOUaeiou].*).*
+97	0.443867	0.514286	0.303030	0.514286	lines with words with a capital followed by letter, zero or more times	\b([A-Z].*[A-Za-z].*)*\b
+224	0.443593	0.551724	0.296296	0.482759	lines containing a character and 7 or more of the string 'dog'	(\b(.)&(dog)\b){7,}
+18	0.440741	0.600000	0.222222	0.500000	lines without a vowel or ending in string 'dog'	~(([AEIOUaeiou])|((.*)(dog)))
+156	0.434066	0.571429	0.230769	0.500000	lines with the string 'dog', number, or letter	.*(dog)|([0-9])|([A-Za-z]).*
+141	0.433623	0.560000	0.260870	0.480000	lines with a number followed by a vowel	([0-9].*[AEIOUaeiou].*).*([A-Za-z]).*
+116	0.433333	0.545455	0.300000	0.454545	lines with 2 or more vowels or the string 'dog'	(([AEIOUaeiou])|(dog)){2,}
+32	0.432234	0.642857	0.153846	0.500000	lines containing words having a letter, a capital letter, as well as a number	\b([A-Za-z])&([A-Z])&([0-9])\b
+94	0.430759	0.484848	0.322581	0.484848	lines containing the string "dog" followed by a letter	(dog).*(.*[A-Za-z].*).*
+258	0.430303	0.545455	0.200000	0.545455	lines with the string 'dog' or letter	.*(dog)|([A-Za-z])|([A-Z]).*
+38	0.429630	0.518519	0.400000	0.370370	at least twice, the string 'dog' followed by a character	(dog.*..*){2,}
+36	0.429309	0.526316	0.235294	0.526316	lines without a lower-case letter, vowel, or string 'dog'	~(([a-z])|([AEIOUaeiou])|(dog))
+117	0.429309	0.526316	0.235294	0.526316	lines without a vowel, lower-case letter, or string 'dog'	~(([AEIOUaeiou])|([a-z])|(dog))
+183	0.428105	0.611111	0.117647	0.555556	lines containing words with the 'dog' or 'truck' strings, or the 'ring' or 'lake' strings	\b((dog)|(truck)|(ring))|(lake)\b
+50	0.425679	0.592593	0.240000	0.444444	lines ending with letter or string 'dog' and string 'truck'	((.*)([A-Za-z]))|((dog)&(truck))
+160	0.425679	0.518519	0.240000	0.518519	lines with 7 or more letters, or a character before the string 'dog'	(([A-Za-z]){7,})|((.).*(dog).*)
+79	0.422723	0.476190	0.315789	0.476190	lines without zero or more of a letter	~(.*([A-Za-z])*.*)
+46	0.422723	0.571429	0.315789	0.380952	Items with a letter or a character at least one time.	((.)|([A-Za-z]))+
+294	0.422222	0.562500	0.266667	0.437500	Items with a vowel preceding a letter, a small letter, and 'dog'.	([AEIOUaeiou]).*(([A-Za-z])&(dog)&([a-z])).*
+111	0.415873	0.619048	0.200000	0.428571	lines that contain a number and the strings 'dog' followed by 'truck', zero times or more	(([0-9])&(dog)).*((truck)*).*
+257	0.414530	0.538462	0.166667	0.538462	lines with vowel followed by string 'dog', 4 or more times	([AEIOUaeiou].*dog.*){4,}
+288	0.414530	0.615385	0.166667	0.461538	lines that contain the string 'dog', a lower-case letter, and a capital letter	.*([a-z])&(dog)&([A-Z]).*
+221	0.413052	0.516129	0.206897	0.516129	lines starting with a character or number, string 'dog', and a letter	((.)(.*))|(([0-9])&(dog)&([A-Za-z]))
+133	0.413052	0.516129	0.206897	0.516129	lines with the string 'dog', letter, and character before string 'truck'	((dog)&([A-Za-z])&(.)).*(truck).*
+255	0.412795	0.448980	0.340426	0.448980	lines containing words with the string 'dog' preceding the string 'truck' or a number	\b(dog).*((truck)|([0-9])).*\b
+108	0.412037	0.555556	0.125000	0.555556	lines with no letter, capital letter, or character	~(([A-Za-z])|([A-Z])|(.))
+1	0.410673	0.487805	0.256410	0.487805	lines with string 'dog' before either string 'truck', a vowel, or string 'ring'	(dog).*((truck)|([AEIOUaeiou])|(ring)).*
+225	0.406957	0.560000	0.260870	0.400000	lines with a letter followed by a capital letter	((.*)([A-Za-z])).*([A-Z]).*
+129	0.403030	0.545455	0.300000	0.363636	lines containing a character after a vowel	.*[AEIOUaeiou].*..*.*
+210	0.400988	0.518519	0.240000	0.444444	lines with a vowel after a lower-case letter followed by a character	([a-z].*..*).*([AEIOUaeiou]).*
+33	0.400515	0.486486	0.228571	0.486486	lines with a character before capital letter or string 'dog' or 'truck'	.*(.).*(([A-Z])|(dog)|(truck)).*.*
+175	0.400000	0.500000	0.200000	0.500000	lines without a vowel or a number	~(([AEIOUaeiou])|([0-9]))
+105	0.397059	0.470588	0.250000	0.470588	lines having string 'dog', string 'truck', and string 'ring' before a capital	((dog)&(truck)&(ring)).*([A-Z]).*
+244	0.397059	0.470588	0.250000	0.470588	lines with either a capital letter, or string 'dog', or 'truck' before a character	(([A-Z])|(dog)|(truck)).*(.).*

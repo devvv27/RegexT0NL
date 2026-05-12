@@ -45,6 +45,38 @@
         .form-group {
             margin-bottom: 25px;
         }
+
+        .direction-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .direction-btn {
+            flex: 1;
+            min-width: 180px;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .direction-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .direction-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
         
         label {
             display: block;
@@ -228,10 +260,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>Natural Language to Regex</h1>
-        <p class="subtitle">Convert descriptions to custom regex patterns using Ollama</p>
+        <h1 id="pageTitle">Natural Language to Regex</h1>
+        <p class="subtitle" id="pageSubtitle">Convert descriptions to custom regex patterns using Ollama</p>
         
         <form id="regexForm">
+            <div class="form-group">
+                <label>Direction:</label>
+                <div class="direction-selector" id="directionSelector">
+                    <button type="button" class="direction-btn active" data-direction="nl_to_regex">NL to Regex</button>
+                    <button type="button" class="direction-btn" data-direction="regex_to_nlp">Regex to NL</button>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="model">Select Model:</label>
                 <div class="model-selector" id="modelSelector">
@@ -261,8 +301,8 @@
             <div id="messageBox"></div>
             
             <div class="output-section">
-                <div class="output-label">Generated Regex:</div>
-                <div class="output-box empty" id="outputBox">No regex generated yet</div>
+                <div class="output-label" id="outputLabel">Generated Regex:</div>
+                <div class="output-box empty" id="outputBox">No output generated yet</div>
             </div>
         </form>
     </div>
@@ -270,7 +310,8 @@
     <script>
         const models = {{ models | tojson }};
         let selectedModel = models[0];
-        let lastRegex = '';
+        let selectedDirection = 'nl_to_regex';
+        let lastOutput = '';
         
         // Initialize model selector
         function initModelSelector() {
@@ -282,6 +323,42 @@
                 btn.textContent = model;
                 btn.onclick = () => selectModel(model, btn);
                 modelSelector.appendChild(btn);
+            });
+        }
+
+        function initDirectionSelector() {
+            document.querySelectorAll('.direction-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedDirection = btn.dataset.direction;
+                    document.querySelectorAll('.direction-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const title = document.getElementById('pageTitle');
+                    const subtitle = document.getElementById('pageSubtitle');
+                    const inputLabel = document.querySelector('label[for="nlInput"]');
+                    const outputLabel = document.getElementById('outputLabel');
+                    const inputBox = document.getElementById('nlInput');
+
+                    if (selectedDirection === 'regex_to_nlp') {
+                        title.textContent = 'Regex to Natural Language';
+                        subtitle.textContent = 'Explain regex patterns in plain English using Ollama';
+                        inputLabel.textContent = 'Regex Pattern:';
+                        inputBox.placeholder = 'e.g., ((dog)|(truck)){5,}';
+                        outputLabel.textContent = 'Generated Description:';
+                        document.getElementById('copyBtn').textContent = 'Copy Description';
+                        document.querySelector('.btn-generate').textContent = 'Generate Description';
+                        document.getElementById('outputBox').textContent = 'No output generated yet';
+                    } else {
+                        title.textContent = 'Natural Language to Regex';
+                        subtitle.textContent = 'Convert descriptions to custom regex patterns using Ollama';
+                        inputLabel.textContent = 'Natural Language Description:';
+                        inputBox.placeholder = "e.g., 'lines containing the string dog or truck at least 5 times'";
+                        outputLabel.textContent = 'Generated Regex:';
+                        document.getElementById('copyBtn').textContent = 'Copy to Clipboard';
+                        document.querySelector('.btn-generate').textContent = 'Generate Regex';
+                        document.getElementById('outputBox').textContent = 'No output generated yet';
+                    }
+                });
             });
         }
         
@@ -312,7 +389,7 @@
                 const response = await fetch('/api/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nl: nlInput, model: selectedModel })
+                    body: JSON.stringify({ nl: nlInput, model: selectedModel, direction: selectedDirection })
                 });
                 
                 const data = await response.json();
@@ -325,12 +402,12 @@
                     return;
                 }
                 
-                lastRegex = data.regex;
+                lastOutput = data.regex;
                 outputBox.className = 'output-box';
-                outputBox.textContent = lastRegex;
+                outputBox.textContent = lastOutput;
                 
                 document.getElementById('copyBtn').disabled = false;
-                showMessage(`Regex generated using ${data.model}`, 'success');
+                showMessage(`Output generated using ${data.model}`, 'success');
             } catch (error) {
                 loading.classList.remove('show');
                 showMessage(`Network error: ${error.message}`, 'error');
@@ -341,8 +418,8 @@
         
         // Handle copy button
         document.getElementById('copyBtn').addEventListener('click', () => {
-            if (lastRegex) {
-                navigator.clipboard.writeText(lastRegex).then(() => {
+            if (lastOutput) {
+                navigator.clipboard.writeText(lastOutput).then(() => {
                     showMessage('Copied to clipboard!', 'success');
                 }).catch(() => {
                     showMessage('Failed to copy', 'error');
@@ -362,6 +439,7 @@
         
         // Initialize on load
         initModelSelector();
+        initDirectionSelector();
     </script>
 </body>
 </html>
